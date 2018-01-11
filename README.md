@@ -13,7 +13,7 @@ Now, the code is setup in a PowerShell module file (.psm1) that has an associate
 
 ## The Functions
 
-_Set-NXAPIEnv_ - The primary role of this function is to configure the NX-API URI and set the right headers (incuding Basic authentication) for the NX-API call.
+- _Set-NXAPIEnv_ - The primary role of this function is to configure the NX-API URI and set the right headers (incuding Basic authentication) for the NX-API call.
     - _Parameters_ :
       - **Switch** - **__Required__**.  This is a _string_ object that is either the IP address or FQDN (fully qualified domain name) of the switch that is running NX-API
       - **Username** - **__Required__**.  This is a _string_ object that contains the username for which we will be authenticating into the switch that is running NX-API
