@@ -13,3 +13,15 @@ Now, the code is setup in a PowerShell module file (.psm1) that has an associate
 
 ## The Functions
 
+_Set-NXAPIEnv_ - The primary role of this function is to configure the NX-API URI and set the right headers (incuding Basic authentication) for the NX-API call.
+    _Parameters_ :
+        * **Switch** - **__Required__**.  This is a _string_ object that is either the IP address or FQDN (fully qualified domain name) of the switch that is running NX-API
+        * **Username** - **__Required__**.  This is a _string_ object that contains the username for which we will be authenticating into the switch that is running NX-API
+        * **Password** - **__Required__**.  This is a _SecureString_ object that contains the password for the account we will be authentication with, into the switch that is running NX-API
+        * **Secure** - This is a _switch_ object that when present, will setup the URI to the NX-API endpoint to use HTTPS (assuming the switch has valid certificates installed) for the API communication.  Default behavior of the function is to configure URIs with a HTTP designation.
+        * **Port** - This is an _int_ object that when present will add the port number that NX-API has been configured with.  (ex: **http://testserver:8080/ins**)
+    _Returns_ :
+        * A _hashtable_ object containing three Key/Value pairs
+            * **URI** - A _string_ that has the entire URI (including potential changes to the port and/or connection protocol)
+            * **auth\_header** - A _string_ that contains the Basic authorization header, already configured, based on the username and password passed to the function
+            * **content-type** - A _string_ that contains the content-type header value, defaulted to use _application/json-rpc_
