@@ -13,7 +13,7 @@ Now, the code is setup in a PowerShell module file (.psm1) that has an associate
 
 ## The Functions
 
-- _Set-NXAPIEnv_ - The primary role of this function is to configure the NX-API URI and set the right headers (incuding Basic authentication) for the NX-API call.
+- **_Set-NXAPIEnv_** - The primary role of this function is to configure the NX-API URI and set the right headers (incuding Basic authentication) for the NX-API call.
     - _Parameters_ :
       - **Switch** - **__Required__**.  This is a _string_ object that is either the IP address or FQDN (fully qualified domain name) of the switch that is running NX-API
       - **Username** - **__Required__**.  This is a _string_ object that contains the username for which we will be authenticating into the switch that is running NX-API
@@ -25,8 +25,20 @@ Now, the code is setup in a PowerShell module file (.psm1) that has an associate
         - **URI** - A _string_ that has the entire URI (including potential changes to the port and/or connection protocol)
         - **auth\_header** - A _string_ that contains the Basic authorization header, already configured, based on the username and password passed to the function
         - **content-type** - A _string_ that contains the content-type header value, defaulted to use _application/json-rpc_
-- _Get-JsonBody_ - The primary role of this function is to organize the JSON body necessary for the API call, based on the commands given to the function
+- **_Get-JsonBody_** - The primary role of this function is to organize the JSON body necessary for the API call, based on the commands given to the function
    - _Parameters_ :
      - **Commands** - A _string_ object that comtains the entire list of commands, semi-colon delimited, to be processed by NX-API.  A good example would be the following: **vlan 1000;name Test;mode fabricpath**.  This function will separate out each command and create the appropriate JSON body for processing.
    - _Returns_ :
      - A _string_ object that contains the JSON formatted body tag for the NX-API call
+- **_Initialize-NXAPICall_** - The primary role of this function is to initiate the API call (via _Invoke-WebRequest_) and handle the potential errors that are returned by the NX-API service
+   - _Parameters_ :
+     - **URI** - **__Required__**: A _string_ object that contains the full URI for initiating the NX-API call
+     - **Headers** - **__Required__**: A _hashtable_ object that contains all the pertinent headers for the NX-API call (including the _Content-Type_ and _Authorization_ headers)
+     - **Body** - **__Required__**: A _string_ object that is the JSON formatted set of commands to be executed in the NX-API call
+     - **EnableVerbose** - A _switch_ object that enables verbose logging of the function and returns execution information
+     - **EnableResponse** - A _switch_ object that enables a return string from this function.  Default behavior is for this function to execute, but not return any information
+     - **EnableJsonResponse** - A _switch_ object that works in conjunction with _-EnableResponse_ to also return a JSON formatted response to be processed and information returned to the initiating function.  This is useful and explained later in a couple of example functions (like _Add-NXAPIVlan_ and _Remove-NXAPIVlan_)
+   - _Returns_ :
+     - If _-EnableResponse_ is included in the function call, this function will return some information about the success or failure of the NX-API URI call
+     - Otherwise, the function does not return any information and just executes the NX-API call
+     
