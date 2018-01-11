@@ -25,3 +25,8 @@ Now, the code is setup in a PowerShell module file (.psm1) that has an associate
         - **URI** - A _string_ that has the entire URI (including potential changes to the port and/or connection protocol)
         - **auth\_header** - A _string_ that contains the Basic authorization header, already configured, based on the username and password passed to the function
         - **content-type** - A _string_ that contains the content-type header value, defaulted to use _application/json-rpc_
+- _Get-JsonBody_ - The primary role of this function is to organize the JSON body necessary for the API call, based on the commands given to the function
+   - _Parameters_ :
+     - **Commands** - A _string_ object that comtains the entire list of commands, semi-colon delimited, to be processed by NX-API.  A good example would be the following: **vlan 1000;name Test;mode fabricpath**.  This function will separate out each command and create the appropriate JSON body for processing.
+   - _Returns_ :
+     - A _string_ object that contains the JSON formatted body tag for the NX-API call
