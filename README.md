@@ -43,7 +43,7 @@ Now, the code is setup in a PowerShell module file (.psm1) that has an associate
      - Otherwise, the function does not return any information and just executes the NX-API call
 - **_Add-NXAPIVlan_** - The primary role of this function is to create a Layer 2 VLAN with a determined VLAN ID and VLAN Name.  For my own personal usage, I also have FabricPath enabled, so, set the mode of the VLAN to FabricPath
    - _Parameters_ :
-     - **Switch** - **__Required__**: A _string_ object that contains either the IP address or FQDN of the NX-OS switch to perform the commands against
+     - **Switch** - **__Required__**: A _string_ object that contains either the IP address or FQDN of the NX-OS switch to perform the commands against.  This parameter can take input from the PowerShell pipeline and the function is also configured to allow for processing an array of switch values.
      - **VLANID** - **__Required__**: A _int_ object that contains the VLAN ID that you wish to add to the NX-OS switch.  The parameter also includes validation that the ID is between the range of one (1) to 4094.
      - **VLANName** - **__Required__**: A _string_ object that contains the proposed name of the VLAN.  The parameter has two sets of data validation:  1) The VLAN Name can have a string length between one (1) and 32 characters and 2) The VLAN Name can only include characters ranging from a-z, A-Z, and 0-9 (this is to eliminate problems with special characters with Cisco UCS Director)
      - **Username** - **__Required__**: A _string_ object that contains the username for authentication into the NX-OS switch
@@ -58,7 +58,7 @@ Now, the code is setup in a PowerShell module file (.psm1) that has an associate
       - **Reason** - This is a string that details the specifics behind the code received
 - **_Remove-NXAPIVlan_** - The primary role of this function is to remove a Layer 2 VLAN with a determined VLAN ID from the NX-OS switch.
    - _Parameters_ :
-     - **Switch** - **__Required__**: A _string_ object that contains either the IP address or FQDN of the NX-OS switch to perform the commands against
+     - **Switch** - **__Required__**: A _string_ object that contains either the IP address or FQDN of the NX-OS switch to perform the commands against.  This parameter can take input from the PowerShell pipeline and the function is also configured to allow for processing an array of switch values.
      - **VLANID** - **__Required__**: A _int_ object that contains the VLAN ID that you wish to add to the NX-OS switch.  The parameter also includes validation that the ID is between the range of one (1) to 4094.
      - **Username** - **__Required__**: A _string_ object that contains the username for authentication into the NX-OS switch
      - **Password** - **__Required__**:  A _SecureString_ object that contains the password for the user which we will authenticate into the NX-OS switch
@@ -79,7 +79,7 @@ Now, the code is setup in a PowerShell module file (.psm1) that has an associate
       - A _boolean_ object that either returns a _True_ or _False_ value.  This is the answer of whether or not the VLAN ID was found on the NX-OS switch
 - **_Invoke-NXAPICall_** - The primary role of this function is to provide a blank slate to allow for any sort of NX-OS CLI command blocks to be sent to NX-API
     - _Parameters_ :
-      - **Switch** - **__Required__**: A _string_ object that contains either the IP address or FQDN of the NX-OS switch to perform the commands against
+      - **Switch** - **__Required__**: A _string_ object that contains either the IP address or FQDN of the NX-OS switch to perform the commands against.  This parameter can take input from the PowerShell pipeline and the function is also configured to allow for processing an array of switch values.
       - **Commands** - **__Required__**: A _string_ object that comtains the entire list of commands, semi-colon delimited, to be processed by NX-API.
       - **Username** - **__Required__**: A _string_ object that contains the username for authentication into the NX-OS switch
       - **Password** - **__Required__**:  A _SecureString_ object that contains the password for the user which we will authenticate into the NX-OS switch
