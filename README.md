@@ -63,8 +63,8 @@ Now, the code is setup in a PowerShell module file (.psm1) that has an associate
      - **Username** - **__Required__**: A _string_ object that contains the username for authentication into the NX-OS switch
      - **Password** - **__Required__**:  A _SecureString_ object that contains the password for the user which we will authenticate into the NX-OS switch
      - **EnableVerbose** - A _switch_ object that enables verbose logging of the function and returns execution information
-  - _Returns_ :
-    - A _PSObject_ object that contains the following pieces of information
+   - _Returns_ :
+     - A _PSObject_ object that contains the following pieces of information
       - **Switch** - IP Address/FQDN of the NX-OS device
       - **Command** - The entire list of NX-OS CLI commands that is ran through NX-API
       - **Code** - _Invoke-WebRequest_ return code OR custom code for any specific errors that the process runs into
