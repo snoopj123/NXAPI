@@ -70,3 +70,27 @@ Now, the code is setup in a PowerShell module file (.psm1) that has an associate
       - **Code** - _Invoke-WebRequest_ return code OR custom code for any specific errors that the process runs into
       - **Reason** - This is a string that details the specifics behind the code received
 - **_Find-NXAPIVlan_** - The primary role of this function is for validation as to whether a Layer 2 VLAN already exists on the NX-OS switch.  This function is used in conjunction with _Add-NXAPIVlan_ to provide the default behavior of not allowing the ability to overwrite an existing VLAN
+    - _Parameters_ :
+      - **EnvironmentVariables** - **__Required__**: A _hashtable_ object that contains the output from _Set-NXAPIEnv_.  To be used to initiate the NX-API call to search for the L2 VLAN on the NX-OS switch
+      - **Switch** - **__Required__**: A _string_ object that contains the IP address/FQDN of the NX-OS device running NX-API
+      - **VLANID** - **__Required__**: An _int_ object that contains the VLAN ID that will be searched for on the NX-OS switch
+      - **EnableVerbose** - A _switch_ object that enables verbose logging of the function and returns execution information
+    - _Returns_ :
+      - A _boolean_ object that either returns a _True_ or _False_ value.  This is the answer of whether or not the VLAN ID was found on the NX-OS switch
+- **_Invoke-NXAPICall_** - The primary role of this function is to provide a blank slate to allow for any sort of NX-OS CLI command blocks to be sent to NX-API
+    - _Parameters_ :
+      - **Switch** - **__Required__**: A _string_ object that contains either the IP address or FQDN of the NX-OS switch to perform the commands against
+      - **Commands** - **__Required__**: A _string_ object that comtains the entire list of commands, semi-colon delimited, to be processed by NX-API.
+      - **Username** - **__Required__**: A _string_ object that contains the username for authentication into the NX-OS switch
+      - **Password** - **__Required__**:  A _SecureString_ object that contains the password for the user which we will authenticate into the NX-OS switch
+      - **EnableVerbose** - A _switch_ object that enables verbose logging of the function and returns execution information
+    - _Returns_ :
+      - A _PSObject_ object that contains the following pieces of information
+      - **Switch** - IP Address/FQDN of the NX-OS device
+      - **Command** - The entire list of NX-OS CLI commands that is ran through NX-API
+      - **Code** - _Invoke-WebRequest_ return code OR custom code for any specific errors that the process runs into
+      - **Reason** - This is a string that details the specifics behind the code received
+- **_Failure_** - Primary role of this function is to provide more context to errors that occur when communicating or running CLI through NX-API.  This code was borrowed from Chris Wahl, that was published [here](http://wahlnetwork.com/2015/02/19/using-try-catch-powershells-invoke-webrequest/)
+    - _Parameters_ :  **None**
+    - _Returns_ :
+      - A _string_ object that contains specific error information that has been returned by NX-API.  Likely used when an error 500 occurs and can range from a bad command being sent to bad formatting of the JSON body
