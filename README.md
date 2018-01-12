@@ -41,4 +41,33 @@ Now, the code is setup in a PowerShell module file (.psm1) that has an associate
    - _Returns_ :
      - If _-EnableResponse_ is included in the function call, this function will return some information about the success or failure of the NX-API URI call
      - Otherwise, the function does not return any information and just executes the NX-API call
-     
+- **_Add-NXAPIVlan_** - The primary role of this function is to create a Layer 2 VLAN with a determined VLAN ID and VLAN Name.  For my own personal usage, I also have FabricPath enabled, so, set the mode of the VLAN to FabricPath
+   - _Parameters_ :
+     - **Switch** - **__Required__**: A _string_ object that contains either the IP address or FQDN of the NX-OS switch to perform the commands against
+     - **VLANID** - **__Required__**: A _int_ object that contains the VLAN ID that you wish to add to the NX-OS switch.  The parameter also includes validation that the ID is between the range of one (1) to 4094.
+     - **VLANName** - **__Required__**: A _string_ object that contains the proposed name of the VLAN.  The parameter has two sets of data validation:  1) The VLAN Name can have a string length between one (1) and 32 characters and 2) The VLAN Name can only include characters ranging from a-z, A-Z, and 0-9 (this is to eliminate problems with special characters with Cisco UCS Director)
+     - **Username** - **__Required__**: A _string_ object that contains the username for authentication into the NX-OS switch
+     - **Password** - **__Required__**:  A _SecureString_ object that contains the password for the user which we will authenticate into the NX-OS switch
+     - **EnableVerbose** - A _switch_ object that enables verbose logging of the function and returns execution information
+     - **Overwrite** - A _switch_ object that allows for overwriting a VLAN's information if the VLAN ID already exists on the switch.  Default behavior of this function is to not overwrite any VLAN ID that is found
+  - _Returns_ :
+    - A _PSObject_ object that contains the following pieces of information
+      - **Switch** - IP Address/FQDN of the NX-OS device
+      - **Command** - The entire list of NX-OS CLI commands that is ran through NX-API
+      - **Code** - _Invoke-WebRequest_ return code OR custom code for any specific errors that the process runs into
+      - **Reason** - This is a string that details the specifics behind the code received
+- **_Remove-NXAPIVlan_** - The primary role of this function is to remove a Layer 2 VLAN with a determined VLAN ID from the NX-OS switch.
+   - _Parameters_ :
+     - **Switch** - **__Required__**: A _string_ object that contains either the IP address or FQDN of the NX-OS switch to perform the commands against
+     - **VLANID** - **__Required__**: A _int_ object that contains the VLAN ID that you wish to add to the NX-OS switch.  The parameter also includes validation that the ID is between the range of one (1) to 4094.
+     - **Username** - **__Required__**: A _string_ object that contains the username for authentication into the NX-OS switch
+     - **Password** - **__Required__**:  A _SecureString_ object that contains the password for the user which we will authenticate into the NX-OS switch
+     - **EnableVerbose** - A _switch_ object that enables verbose logging of the function and returns execution information
+  - _Returns_ :
+    - A _PSObject_ object that contains the following pieces of information
+      - **Switch** - IP Address/FQDN of the NX-OS device
+      - **Command** - The entire list of NX-OS CLI commands that is ran through NX-API
+      - **Code** - _Invoke-WebRequest_ return code OR custom code for any specific errors that the process runs into
+      - **Reason** - This is a string that details the specifics behind the code received
+- **_Find-NXAPIVlan_** - The primary role of this function is for validation as to whether a Layer 2 VLAN already exists on the NX-OS switch.  This function is used in conjunction with _Add-NXAPIVlan_ to provide the default behavior of not allowing the ability to overwrite an existing VLAN
+  - 
