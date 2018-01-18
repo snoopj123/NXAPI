@@ -210,6 +210,7 @@ function Add-NXAPIVlan {
             $oldverbose = $VerbosePreference
             $VerbosePreference = "Continue"
         }
+        $pso_object = @()
     }
     Process {
         Write-Verbose "*********************************************************************************************************"        
@@ -252,14 +253,16 @@ function Add-NXAPIVlan {
             else {
                 $api_return = Initialize-NXAPICall -URI $uri -Headers $headers -Body $body -EnableResponse
             }
-            $pso_object = [PSCustomObject]@{Switch = $Switch; Command = $command; Code = ($api_return.Split(";")[0]); Reason = ($api_return.Split(";")[1])}
+            $pso_object += [PSCustomObject]@{Switch = $Switch; Command = $command; Code = ($api_return.Split(";")[0]); Reason = ($api_return.Split(";")[1])}
         }
-        return $pso_object
+        # return $pso_object
     }
     End {
         if ($EnableVerbose) {
             $VerbosePreference = $oldverbose
         }
+
+        return $pso_object
     }
 }
 
