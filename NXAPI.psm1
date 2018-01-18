@@ -287,6 +287,7 @@ function Remove-NXAPIVlan {
             $oldverbose = $VerbosePreference
             $VerbosePreference = "Continue"
         }
+        $pso_object = @()
     }
     Process {
         Write-Verbose "*********************************************************************************************************"        
@@ -309,13 +310,13 @@ function Remove-NXAPIVlan {
         else {
             $api_return = Initialize-NXAPICall -URI $uri -Headers $headers -Body $body -EnableResponse
         }
-        $pso_object = [PSCustomObject]@{Switch = $Switch; Command = $command; Code = ($api_return.Split(";")[0]); Reason = ($api_return.Split(";")[1])}
-        return $pso_object
+        $pso_object += [PSCustomObject]@{Switch = $Switch; Command = $command; Code = ($api_return.Split(";")[0]); Reason = ($api_return.Split(";")[1])}
     }
     End {
         if ($EnableVerbose) {
             $VerbosePreference = $oldverbose
         }
+        return $pso_object
     }
 }
 
@@ -406,6 +407,7 @@ function Invoke-NXAPICall {
             $oldverbose = $VerbosePreference
             $VerbosePreference = "Continue"
         }
+        $pso_object = @()
     }
     Process {
         Write-Verbose "*********************************************************************************************************"        
@@ -427,13 +429,13 @@ function Invoke-NXAPICall {
         else {
             $api_return = Initialize-NXAPICall -URI $uri -Headers $headers -Body $body -EnableResponse
         }
-        $pso_object = [PSCustomObject]@{Switch = $Switch; Command = $command; Code = ($api_return.Split(";")[0]); Reason = ($api_return.Split(";")[1])}
-        return $pso_object
+        $pso_object += [PSCustomObject]@{Switch = $Switch; Command = $command; Code = ($api_return.Split(";")[0]); Reason = ($api_return.Split(";")[1])}
     }
     End {
         if ($EnableVerbose) {
             $VerbosePreference = $oldverbose
         }
+        return $pso_object
     }
 }
 
