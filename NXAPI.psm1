@@ -227,12 +227,12 @@ function Add-NXAPIVlan {
             if ($EnableVerbose) {
                 Write-Verbose "This means we will not overwrite the found VLAN..."
                 $command = "show vlan id $($VLANID)"
-                $pso_object = [PSCustomObject]@{Switch = $Switch; Command = $command; Code = "200"; Reason = "Found VLAN;Not Overwriting"}
+                $pso_object += [PSCustomObject]@{Switch = $Switch; Command = $command; Code = "200"; Reason = "Found VLAN;Not Overwriting"}
                 $VerbosePreference = $oldverbose
             }
             else {
                 $command = "show vlan id $($VLANID)"
-                $pso_object = [PSCustomObject]@{Switch = $Switch; Command = $command; Code = "200"; Reason = "Found VLAN;Not Overwriting"} 
+                $pso_object += [PSCustomObject]@{Switch = $Switch; Command = $command; Code = "200"; Reason = "Found VLAN;Not Overwriting"} 
             }
         }
         else {
